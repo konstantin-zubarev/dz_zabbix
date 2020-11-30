@@ -1,4 +1,4 @@
-#### Стенд для занития для мониторинга и алертинга.
+## Стенд для занития для мониторинга и алертинга.
 
 Цель:
 
@@ -14,14 +14,14 @@
 
 ### 1. Установка веб-сервера
 
-## 1.1. Установим web-сервер Nginx
+#### 1.1. Установим web-сервер Nginx
 ```
 [root@zabbix-server ~]# yum install -y http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 [root@zabbix-server ~]# yum install -y nginx
 [root@zabbix-server ~]# systemctl enable --now nginx
 ```
 
-## 1.2. Установка PHP
+#### 1.2. Установка PHP
 ```
 [root@zabbix-server ~]# yum install -y install epel-release yum-utils
 [root@zabbix-server ~]# yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
@@ -72,7 +72,7 @@ php_value[soap.wsdl_cache_dir]  = /var/lib/php/wsdlcache
 srw-rw---- 1 nginx nginx 0 Nov 16 13:34 /var/run/php-fpm/php-fpm.sock
 ```
 
-## 1.3. Установка MariaDB
+#### 1.3. Установка MariaDB
 Установка базы данных MariaDB
 ```
 [root@zabbix-server ~]# yum install -y mariadb mariadb-server MySQL-python
@@ -84,16 +84,16 @@ srw-rw---- 1 nginx nginx 0 Nov 16 13:34 /var/run/php-fpm/php-fpm.sock
 ```
 password mariadb: password
 
-#### 2. Установка Zabbix
+### 2. Установка Zabbix
 
-### 2.1. Установка Zabbix сервера
+#### 2.1. Установка Zabbix сервера
 
 ```
 [root@zabbix-server ~]# yum install -y https://repo.zabbix.com/zabbix/4.4/rhel/7/x86_64/zabbix-release-4.4-1.el7.noarch.rpm
 [root@zabbix-server ~]# yum install -y zabbix-agent zabbix-server-mysql zabbix-web-mysql
 ```
 
-### 2.2. Создание базы данных для Zabbix сервера
+#### 2.2. Создание базы данных для Zabbix сервера
 
 ```
 [root@zabbix-server ~]# mysql -uroot -ppassword
@@ -105,7 +105,7 @@ MariaDB [(none)]> GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;
 MariaDB [(none)]> \q
 ```
 
-### 2.3. Заполнение базы данных необходимыми параметрами 
+#### 2.3. Заполнение базы данных необходимыми параметрами 
 
 ```
 zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix
@@ -128,7 +128,7 @@ Timeout=10
 [root@zabbix-server ~]# systemctl enable --now zabbix-server
 ```
 
-### 2.4. Настройка Nginx
+#### 2.4. Настройка Nginx
 
 ```
 [root@zabbix-server ~]# mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bak
@@ -181,7 +181,7 @@ server {
 [root@zabbix-server ~]# chown -R nginx:nginx /etc/zabbix/web
 ```
 
-### 2.5. SELinux
+#### 2.5. SELinux
 
 Из лога `audit.log` создадим разрешающий модуль для zabbix:
 
@@ -220,7 +220,7 @@ semodule -i php-fpm.pp
 [root@zabbix-server ~]# semodule -i semodule -i php-fpm.pp
 ```
 
-### 2.6. Установка Zabbix адент
+#### 2.6. Установка Zabbix адент
 
 Установим на второй хост zabbix agent.
 
@@ -244,12 +244,9 @@ Hostname=monagent
 [root@zabbix-agent ~]# systemctl enable --now zabbix-agent
 ```
 
-![](files/zabbix.jpg)
-
-
 Открываем браузер, переходим [Zabbix](http://192.168.11.150/) в панели zabbix на серере zabbix server добавляем хост zabbix agent.
 
-
+![](files/zabbix.jpg)
 
 Ссылка на дополнительную информацию
 - [Установка Zabbix](https://sevo44.ru/ustanovka-zabbix-4-2/)
