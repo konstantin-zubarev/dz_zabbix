@@ -192,11 +192,11 @@ server {
 ******************** IMPORTANT ***********************
 To make this policy package active, execute:
 
-semodule -i zabbix_service.pp
+semodule -i zabbix.pp
 ```
 Устанавливаем модуль
 ```
-[root@zabbix-server ~]# semodule -i zabbix_service.pp
+[root@zabbix-server ~]# semodule -i zabbix.pp
 ```
 
 ```
